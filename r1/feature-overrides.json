@@ -1,0 +1,20 @@
+[
+  {
+    "file": "smali/com/naruto/port/LauncherActivity.smali",
+    "old": "    invoke-super/range {p0 .. p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V",
+    "new": "    invoke-super/range {p0 .. p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V\n\n    invoke-static/range {p0 .. p0}, Lcom/naruto/port/LoggingControl;->initializeLauncher(Landroid/content/Context;)V",
+    "reason": "Apply logging policy in the launcher process."
+  },
+  {
+    "file": "smali/com/naruto/port/NarutoActivity.smali",
+    "old": "    invoke-super {p0, p1}, Lorg/libsdl/app/SDLActivity;->onCreate(Landroid/os/Bundle;)V",
+    "new": "    invoke-static/range {p0 .. p0}, Lcom/naruto/port/LoggingControl;->initialize(Landroid/content/Context;)Z\n\n    invoke-super {p0, p1}, Lorg/libsdl/app/SDLActivity;->onCreate(Landroid/os/Bundle;)V",
+    "reason": "Configure logcat/stdout/stderr before game native libraries load in the separate process."
+  },
+  {
+    "file": "smali/com/naruto/port/NarutoActivity.smali",
+    "old": "    :cond_0\n    const-string p1, \"naruto\"",
+    "new": "    :cond_0\n    invoke-static/range {p0 .. p0}, Lcom/naruto/port/LoggingControl;->gameReady(Landroid/content/Context;)V\n\n    const-string p1, \"naruto\"",
+    "reason": "Install native file-log suppression after libraries load, before the SDL game thread starts."
+  }
+]

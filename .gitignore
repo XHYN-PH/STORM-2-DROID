@@ -6,3 +6,10 @@
 *.zip
 private/
 ppc/
+
+__pycache__/
+dist/
+*.p12
+*.pass
+*.jks
+*.keystore
