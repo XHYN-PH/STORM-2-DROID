@@ -1,0 +1,182 @@
+name: STORM 2 screenshot review
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Successful Android validation run
+        required: true
+        type: string
+permissions:
+  actions: read
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        font: ['1.0', '1.3']
+    steps:
+      - name: Read retained Android screenshots
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.run_id }}
+          name: R2-Android-validation-${{ matrix.font }}
+          path: captures
+      - name: Preview launcher group 1
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('launcher.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(0,min(10,len(parts))):
+              print(f'::notice title=R2 preview launcher {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview launcher group 2
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('launcher.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(10,min(20,len(parts))):
+              print(f'::notice title=R2 preview launcher {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview controller group 1
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('controller.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(0,min(10,len(parts))):
+              print(f'::notice title=R2 preview controller {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview controller group 2
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('controller.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(10,min(20,len(parts))):
+              print(f'::notice title=R2 preview controller {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview display group 1
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('display.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(0,min(10,len(parts))):
+              print(f'::notice title=R2 preview display {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview display group 2
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('display.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(10,min(20,len(parts))):
+              print(f'::notice title=R2 preview display {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview game-menu group 1
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('game-menu.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(0,min(10,len(parts))):
+              print(f'::notice title=R2 preview game-menu {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview game-menu group 2
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('game-menu.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(10,min(20,len(parts))):
+              print(f'::notice title=R2 preview game-menu {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview statistics group 1
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('statistics.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(0,min(10,len(parts))):
+              print(f'::notice title=R2 preview statistics {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview statistics group 2
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('statistics.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(10,min(20,len(parts))):
+              print(f'::notice title=R2 preview statistics {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview closing group 1
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('closing.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(0,min(10,len(parts))):
+              print(f'::notice title=R2 preview closing {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
+      - name: Preview closing group 2
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          matches=list(Path('captures').rglob('closing.preview.jpg'))
+          assert len(matches)==1, matches
+          encoded=base64.b64encode(matches[0].read_bytes()).decode()
+          parts=[encoded[i:i+3000] for i in range(0,len(encoded),3000)]
+          assert len(parts)<=20, 'Preview exceeds bounded annotation groups'
+          for index in range(10,min(20,len(parts))):
+              print(f'::notice title=R2 preview closing {index+1:02d}/{len(parts):02d}::'+parts[index])
+          PY
