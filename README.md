@@ -17,6 +17,12 @@ STORM 2 is my modified English edition of the [original native port](https://git
 
 The focus is a cleaner interface, more useful Android options and less unnecessary work in the menus and overlays. Performance and compatibility still depend on the phone, driver and game scene.
 
+## Screenshots
+
+<img src="docs/screenshots/r1-launcher.jpg" alt="STORM 2 English launcher with the original layout, Logging switch and More options" width="100%">
+
+[View the refined settings menu](docs/screenshots/r1-display.jpg).
+
 ## What changed from the original?
 
 | Feature | Original app | This edition |
