@@ -117,5 +117,6 @@ if __name__ == '__main__':
     parser.add_argument('--android-jar',type=Path,help='Android API 30 android.jar; required with --r2')
     parser.add_argument('--alias', default='xhyn-r1')
     args=parser.parse_args()
+    if not args.r2:parser.error('STORM 2 R1 requires --r2 to include the complete customization runtime')
     if args.r2 and not args.android_jar:parser.error('--r2 requires --android-jar')
     build(args)
