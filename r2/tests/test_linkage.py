@@ -18,5 +18,17 @@ class LinkageRegression(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Inaccessible APK member'):linkage.check(self.fixture('r2ShaderPrepare','private static'))
     def test_static_invocation_mismatch_is_rejected(self):
         with self.assertRaisesRegex(ValueError,'Static/instance mismatch'):linkage.check(self.fixture('r2ShaderPrepare','public'))
+    def callback_fixture(self,callback):
+        root=self.fixture('r2ShaderPrepare')
+        interface=root/'smali/a/b.smali';interface.parent.mkdir(parents=True)
+        interface.write_text('.class public interface abstract La/b;\n.super Ljava/lang/Object;\n.method public abstract b(Z)V\n.end method\n')
+        listener=root/'smali/com/naruto/port/LoggingToggleListener.smali'
+        listener.write_text('.class public Lcom/naruto/port/LoggingToggleListener;\n.super Ljava/lang/Object;\n.implements La/b;\n.method public '+callback+'(Z)V\n .locals 0\n return-void\n.end method\n')
+        return root
+    def test_storm2_logging_callback_mismatch_is_rejected(self):
+        with self.assertRaisesRegex(ValueError,'Missing concrete interface callback La/b;->b'):
+            linkage.check(self.callback_fixture('a'))
+    def test_storm2_logging_callback_matches_real_interface(self):
+        self.assertEqual(linkage.check(self.callback_fixture('b')),2)
 
 if __name__=='__main__':unittest.main()

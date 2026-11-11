@@ -12,7 +12,7 @@ def check(root):
         parent=re.search(r'^\.super (L[^;]+;)$',source,re.M)
         methods={m.group(2):set(m.group(1).split()) for m in re.finditer(r'^\.method (.*?) ([^\s]+\([^\n]*\)[^\s]+)$',source,re.M)}
         fields={m.group(2):set(m.group(1).split()) for m in re.finditer(r'^\.field (.*?) ([^\s:]+:[^\s=]+)',source,re.M)}
-        classes[header.group(2)]={'flags':set(header.group(1).split()),'parent':parent.group(1) if parent else None,'methods':methods,'fields':fields,'path':path,'source':source}
+        classes[header.group(2)]={'flags':set(header.group(1).split()),'parent':parent.group(1) if parent else None,'interfaces':re.findall(r'^\.implements (L[^;]+;)$',source,re.M),'methods':methods,'fields':fields,'path':path,'source':source}
     errors=[];checked=0
     def package(name):return name.rsplit('/',1)[0]
     def accessible(flags,caller,owner):return 'public' in flags or caller==owner or ('private' not in flags and package(caller)==package(owner))
@@ -24,7 +24,22 @@ def check(root):
             owner=data['parent']
         return None,None
     for caller,data in classes.items():
-        if not caller.startswith('Lcom/naruto/r2/'):continue
+        added=caller.startswith('Lcom/naruto/r2/') or caller=='Lcom/naruto/port/LoggingToggleListener;'
+        if not added:continue
+        # A compiled stub can name the wrong callback and still produce valid DEX.
+        # Check concrete implementations against the real APK interface contracts.
+        if 'abstract' not in data['flags'] and 'interface' not in data['flags']:
+            pending=list(data['interfaces']);seen=set()
+            while pending:
+                interface=pending.pop()
+                if interface in seen or interface not in classes:continue
+                seen.add(interface);contract=classes[interface];pending.extend(contract['interfaces'])
+                for member,required in contract['methods'].items():
+                    if 'abstract' not in required:continue
+                    owner,actual=resolve(caller,'methods',member)
+                    if actual is None or 'abstract' in actual or 'static' in actual or 'public' not in actual:
+                        errors.append(f'{data["path"]}: Missing concrete interface callback {interface}->{member}')
+                    else:checked+=1
         for number,line in enumerate(data['source'].splitlines(),1):
             match=re.search(r'^\s*(invoke-[\w/-]+)\s+\{[^}]*\}, (L[^;]+;)->([^\s]+\([^)]*\)[^\s]+)',line)
             kind='methods'

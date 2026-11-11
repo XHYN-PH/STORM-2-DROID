@@ -13,7 +13,7 @@
     return-void
 .end method
 
-.method public final a(Z)V
+.method public final b(Z)V
     .locals 4
     iget-object v0, p0, Lcom/naruto/port/LoggingToggleListener;->launcher:Lcom/naruto/port/LauncherActivity;
     const-string v1, "naruto"

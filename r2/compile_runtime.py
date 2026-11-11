@@ -6,8 +6,8 @@ from pathlib import Path
 from zipfile import ZipFile
 ROOT=Path(__file__).resolve().parent
 STUBS={
-'com/naruto/port/LoggingToggleListener.java':'package com.naruto.port; public class LoggingToggleListener implements a.b {public LoggingToggleListener(LauncherActivity l,a.c c,android.widget.LinearLayout r,int n){} public void a(boolean value){}}',
-'a/b.java': 'package a; public interface b {void a(boolean value);}',
+'com/naruto/port/LoggingToggleListener.java':'package com.naruto.port; public class LoggingToggleListener implements a.b {public LoggingToggleListener(LauncherActivity l,a.c c,android.widget.LinearLayout r,int n){} public void b(boolean value){}}',
+'a/b.java': 'package a; public interface b {void b(boolean value);}',
 'a/c.java': 'package a; public class c extends android.view.View {public c(com.naruto.port.LauncherActivity a,boolean b){super(a);} public void setListener(a.b l){} }',
 'a/k.java': 'package a; public class k {public String a,b,c,d,e; public k(String a,String b,String c,String d,String e){} public String a(){return "";}}',
 'a/e0.java': 'package a; public class e0 {public float j,k,l; public boolean p;}',

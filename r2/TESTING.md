@@ -5,7 +5,7 @@
 - 85 native logging assertions under AddressSanitizer and UndefinedBehaviorSanitizer.
 - 28 isolated save backup/export/restore assertions, using `STORM2.S` paths and protecting 100% save markers.
 - 30 driver/package compatibility assertions, 14 session/status file assertions, 10 FPS text assertions, 6 renderer-report assertions and 24 configuration/display assertions.
-- Four member-linkage checker regression tests, runtime Java/D8 compilation and 244 checked cross-package references in the real customized APK.
+- Six member-linkage checker regression tests, runtime Java/D8 compilation and checked cross-package references/interface callbacks in the real customized APK.
 - Native engine executable/linkage sections, other upstream libraries, assets, license bodies and bundled `save100/STORM2.S` verified against the pinned upstream APK.
 - APK signature, ARM64 helper exports, archive integrity and 16 KiB ZIP alignment checked during assembly.
 
